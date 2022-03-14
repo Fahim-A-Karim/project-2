@@ -7,6 +7,7 @@
 
 #define BUFFER_LEN 1024
 #define EXITCD "exit\n"
+#define PROCD "proc"
 
 
 void  parse(char *line, char **argv)
@@ -32,7 +33,10 @@ int main(int argc, char *argv[]){
 	//char* path= "/bin/";
 	//int spaceCount = 0;
 	char* argument[BUFFER_LEN];
-
+	FILE *fil;
+	char fileName[BUFFER_LEN];
+	char procPath[] = "/proc/";
+	char ind;
 
 	//first check if it was ran with arguments, if it was print error
 	if(argc > 1 && *argv != NULL){
@@ -71,20 +75,41 @@ int main(int argc, char *argv[]){
 				argument[++i] = strtok(NULL, " ");
 			}
 			
+			//check if arg 0 is proc or not
+			if (strcmp(argument[0], PROCD) == 0){
+				
+				/////////////////////////////////////////////work on from here
+				//1. figure out how to read specifically from the proc filesystem
+				argument[0] = procPath;
+				fil = fopen(argument, "r");
+
+				//2. read from it
+				fgetc(fil);
+    			while (ind != EOF){
+					//3. print out it's output to stdout
+        			printf ("%c", ind);
+        			ind = fgetc(fil);
+    			}
+				
 
 
-			//now you can fork
-			retVal = fork();
-			//check if you're in child
-			if(retVal == 0){
-				//execute
-				execvp(argument[0], argument);
-				fprintf( stderr, "fail, in child\n");
-				doYouRun = 0;
 			}else{
-				//else wait
-				while (wait(&status) != retVal);
+
+				//now you can fork
+				retVal = fork();
+				//check if you're in child
+				if(retVal == 0){
+					//execute
+					execvp(argument[0], argument);
+					fprintf( stderr, "fail, in child\n");
+					doYouRun = 0;
+				}else{
+					//else wait
+					while (wait(&status) != retVal);
+				}
 			}
+
+			
 		}
 		
 		//spaceCount = 0;
