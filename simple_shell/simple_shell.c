@@ -7,7 +7,8 @@
 
 #define BUFFER_LEN 1024
 #define EXITCD "exit\n"
-#define PROCD "proc"
+#define PROCD "/proc/"
+#define PROCS "proc"
 
 
 
@@ -24,8 +25,9 @@ int main(int argc, char *argv[]){
 	char* argument[BUFFER_LEN];
 	FILE *fil;
 	char fileName[BUFFER_LEN];
-	char procPath[BUFFER_LEN] = "/proc/";
 	char ind;
+
+	memset(fileName, 0, 100);
 
 	//first check if it was ran with arguments, if it was print error
 	if(argc > 1 && *argv != NULL){
@@ -65,12 +67,12 @@ int main(int argc, char *argv[]){
 			}
 			
 			//check if arg 0 is proc or not
-			if (strcmp(argument[0], PROCD) == 0){
+			if (strcmp(argument[0], PROCS) == 0){
 				
-				/////////////////////////////////////////////work on from here
+				
 				//1. figure out how to read specifically from the proc filesystem
 				
-				argument[0] = procPath;
+				argument[0] = PROCD;
 				//strcat(procPath, p);
 				//printf(procPath);
 				//printf("\n");
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]){
     			 	} while (ind != EOF);
 				
 				fclose(fil);
-
+				
 
 			}else{
 
