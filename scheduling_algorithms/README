@@ -13,3 +13,15 @@ For example, to build the FCFS scheduler, enter
 make fcfs
 
 which builds the fcfs executable file.
+
+
+Citations for the project:
+
+- “Difference between Priority Scheduling and Round Robin (RR) CPU Scheduling.” GeeksforGeeks, 9 June 2020, https://www.geeksforgeeks.org/difference-between-priority-scheduling-and-round-robin-rr-cpu-scheduling/. 
+- Operating System Scheduling Algorithms, https://www.tutorialspoint.com/operating_system/os_process_scheduling_algorithms.htm. 
+- “Program for Round Robin Scheduling: Set 1.” GeeksforGeeks, 21 Sept. 2021, https://www.geeksforgeeks.org/program-round-robin-scheduling-set-1/. 
+- “Program for Shortest Job First (or SJF) CPU Scheduling: Set 1 (Non- Preemptive).” GeeksforGeeks, 8 Feb. 2022, https://www.geeksforgeeks.org/program-for-shortest-job-first-or-sjf-cpu-scheduling-set-1-non-preemptive/. 
+- RyanCorbin. “Ryancorbin/A3.” GitHub, https://github.com/RyanCorbin/A3. 
+- Williams, Lawrence. “FCFS Scheduling Algorithm: What Is, Example Program.” Guru99, 5 Mar. 2022, https://www.guru99.com/fcfs-scheduling.html. 
+- wwells4. “CS433-PROJECT3/SCHEDULE_PRIORITY_RR.C At Master · WWELLS4/CS433-project3.” GitHub, https://github.com/wwells4/CS433-Project3/blob/master/schedule_priority_rr.c. 
+

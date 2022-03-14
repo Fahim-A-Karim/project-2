@@ -10,18 +10,7 @@
 #define PROCD "proc"
 
 
-void  parse(char *line, char **argv)
-{
-     while (*line != '\0') {       /* if not the end of line ....... */ 
-          while (*line == ' ' || *line == '\t' || *line == '\n')
-               *line++ = '\0';     /* replace white spaces with 0    */
-          *argv++ = line;          /* save the argument position     */
-          while (*line != '\0' && *line != ' ' && 
-                 *line != '\t' && *line != '\n') 
-               line++;             /* skip the argument until ...    */
-     }
-     *argv = '\0';                 /* mark the end of argument list  */
-}
+
 
 int main(int argc, char *argv[]){
 	//variable stuff
@@ -35,7 +24,7 @@ int main(int argc, char *argv[]){
 	char* argument[BUFFER_LEN];
 	FILE *fil;
 	char fileName[BUFFER_LEN];
-	char procPath[] = "/proc/";
+	char procPath[BUFFER_LEN] = "/proc/";
 	char ind;
 
 	//first check if it was ran with arguments, if it was print error
@@ -80,17 +69,30 @@ int main(int argc, char *argv[]){
 				
 				/////////////////////////////////////////////work on from here
 				//1. figure out how to read specifically from the proc filesystem
-				argument[0] = procPath;
-				fil = fopen(argument, "r");
-
-				//2. read from it
-				fgetc(fil);
-    			while (ind != EOF){
-					//3. print out it's output to stdout
-        			printf ("%c", ind);
-        			ind = fgetc(fil);
-    			}
 				
+				argument[0] = procPath;
+				//strcat(procPath, p);
+				//printf(procPath);
+				//printf("\n");
+				int x = 0;
+
+				while(argument[x] != NULL){
+					strcat(fileName, argument[x]);
+					x+= 1;
+				}
+				printf(fileName);
+				fil = fopen(fileName, "r");
+
+				 //2. read from it
+				do {
+        			ind = fgetc(fil);
+        		 	printf("%c", ind);
+ 
+        		 	// Checking if character is not EOF.
+        		 	// If it is EOF stop eading.
+    			 	} while (ind != EOF);
+				
+				fclose(fil);
 
 
 			}else{
