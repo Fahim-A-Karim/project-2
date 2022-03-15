@@ -6,36 +6,63 @@
 #include "cpu.h"
 
 //variables
-int numTasks = 0;
+int tasksLeft = 0;
 
 struct node *head;
 
-
-void add(char *name, int priority, int burst)
-{
-    
-	Task *nod = malloc(sizeof(struct node));
+struct node* getSB(struct node *head){
 	
-    //nothing of note, should be just assiging values and inserting
-    nod->name = name;
+	int currBurst = 0;
+	int sBurst = 0;
+	
+	struct node *currNod = head;
+	struct node *sNod = malloc(sizeof(struct node));
+
+	sNod = head;
+	
+	while(currNod != NULL)
+	{
+		sBurst = sNod->task->burst;
+		currBurst = currNod->task->burst;
+
+		if(currBurst < sBurst){
+			sNod = currNod;
+			currNod = currNod->next;
+
+		}else{
+			currNod = currNod->next;
+
+		}
+	}
+	return sNod;
+}
+
+
+void add(char *name, int priority, int burst){
+    //increment tasks
+	tasksLeft+= 1;
+
+	Task *nod = malloc(sizeof(struct node));
+	//assign parameters
 	nod->priority = priority;
+	nod->name = name;
 	nod->burst = burst;
 
     //then just insert the nodes
 	insert(&head, nod);
-
-	numTasks+= 1;
+	
+	
 }
 
-void schedule()
-{
-	//SJF
-	while(numTasks > 0)
-	{
-		struct node *smallest = getSmallestBurst(head);
+void schedule(){
+	
+
+	for(int i = tasksLeft; i > 0; i--){
+		struct node *smallest = getSB(head);
 		Task *tmp = smallest->task;
 		run(tmp, tmp->burst);
 		delete(&head, tmp);
-		numTasks--;
+		
 	}
+	tasksLeft = 0;
 } 

@@ -6,36 +6,43 @@
 #include "cpu.h"
 
 //variables
-int numTasks = 0;
+int tasksLeft = 0;
 
 struct node *head;
 
 
-void add(char *name, int priority, int burst)
-{
-    
+void add(char *name, int priority, int burst){
+    //increment tasks
+	tasksLeft+= 1;
+
 	Task *nod = malloc(sizeof(struct node));
-	
-    //nothing of note, should be just assiging values and inserting
-    nod->name = name;
+	//assign parameters
 	nod->priority = priority;
+	nod->name = name;
 	nod->burst = burst;
 
     //then just insert the nodes
 	insert(&head, nod);
-
-	numTasks+= 1;
+	
 }
 
-void schedule()
-{
-	
-
-	while(numTasks > 0)
-	{
-		Task *nod = head->task;
+void schedule(){
+	struct node *temp;
+	temp = head;
+	printf("First come first serve is probably the easiest algorithm. As the textbook states it's just like a line \n");
+	printf("In order to run this we just run the last element of the list since they entered in reverse and then delete it moving to the next in line\n");
+	for(int i = tasksLeft; i > 0; i--){
+		temp = head;
+		while(temp->next != NULL){
+			temp = temp->next;
+		}
+		Task *nod = temp->task;
+		
+		//run it
 		run(nod, nod->burst);
+		//delete it
 		delete(&head, nod);
-		numTasks--;
 	}
+	tasksLeft = 0;
+	printf("After running all of the nodes it ends here \n");
 } 
