@@ -55,7 +55,7 @@ void schedule(){
 				printf("Cycled back \n");
 				currNod = head;
 				if (currNod == NULL){
-					printf("Finished all tasks\n");
+					printf("head was empty, so returning\n");
 					return;
 
 				}else{
