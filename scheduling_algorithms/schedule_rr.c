@@ -5,68 +5,78 @@
 #include "list.h"
 #include "cpu.h"
 
-struct node *head;
-int numTasks = 0;
+//variables
+int tasksLeft = 0;
 
-void add(char *name, int priority, int burst)
-{
-	Task *tmp = malloc(sizeof(struct node));
-	tmp->name = name;
-	tmp->priority = priority;
-	tmp->burst = burst;
-	insert(&head, tmp);
-	numTasks++;
+struct node *head;
+
+void add(char *name, int priority, int burst){
+    //increment tasks
+	tasksLeft+= 1;
+
+	Task *nod = malloc(sizeof(struct node));
+	//assign parameters
+	nod->priority = priority;
+	nod->name = name;
+	nod->burst = burst;
+
+    //then just insert the nodes
+	insert(&head, nod);
+	
+	
 }
+
+
 
 void schedule()
 {
-	struct node* temp = head;
+	struct node* currNod = head;
 	while (numTasks > 0)
 	{
-		Task *tmp = temp->task;
-		if (tmp->burst > 10)
+		Task *currTas = currNod->task;
+		if (currTas->burst > 10)
 		{
-			run(tmp, 10);
-			tmp->burst = tmp->burst - 10;
-			temp = temp->next;
-			if (temp != NULL)
+			run(currTas, 10);
+			currTas->burst = currTas->burst - 10;
+			currNod = currNod->next;
+			if (currNod != NULL)
 			{
-				tmp = temp->task;
+				currTas = currNod->task;
 			}
 			else
 			{
-				temp = head;
-				if (temp == NULL)
+				currNod = head;
+				if (currNod == NULL)
 				{
 					return;
 				}
 				else
 				{
-					tmp = temp->task;
+					currTas = currNod->task;
 				}
 			}
 		}
 		else
 		{
-			int time_Remaining = tmp->burst;
-			run(tmp, time_Remaining);
-			tmp->burst = tmp->burst - time_Remaining;
-			temp = temp->next;
-			delete(&head, tmp);
-			if (temp != NULL)
+			int time_Remaining = currTas->burst;
+			run(currTas, time_Remaining);
+			currTas->burst = currTas->burst - time_Remaining;
+			currNod = currNod->next;
+			delete(&head, currTas);
+			if (currNod != NULL)
 			{
-				tmp = temp->task;
+				currTas = currNod->task;
 			}
 			else
 			{
-				temp = head;
-				if (temp == NULL)
+				currNod = head;
+				if (currNod == NULL)
 				{
 					return;
 				}
 				else
 				{
-					tmp = temp->task;
+					currTas = currNod->task;
 				}
 			}
 		}
