@@ -33,14 +33,17 @@ void schedule(){
 	printf("In order to run this we just run the last element of the list since they entered in reverse and then delete it moving to the next in line\n");
 	for(int i = tasksLeft; i > 0; i--){
 		temp = head;
+		printf("Traversing here \n");
 		while(temp->next != NULL){
 			temp = temp->next;
 		}
 		Task *nod = temp->task;
 		
 		//run it
+		printf("running here \n");
 		run(nod, nod->burst);
 		//delete it
+		printf("deleting here \n");
 		delete(&head, nod);
 	}
 	tasksLeft = 0;

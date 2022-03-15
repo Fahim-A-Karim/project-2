@@ -16,9 +16,8 @@ struct node* getSB(struct node *head){
 	int sBurst = 0;
 	
 	struct node *currNod = head;
-	struct node *sNod = malloc(sizeof(struct node));
+	struct node *sNod = head;
 
-	sNod = head;
 	
 	while(currNod != NULL)
 	{
@@ -56,13 +55,23 @@ void add(char *name, int priority, int burst){
 
 void schedule(){
 	
-
+	printf("Shortest job first is also quite simple, you just run in order of smallest cpu burst to largest \n");
+	printf("In order to do this first we get the smallest node by traversing the list and comparing each task \n");
+	printf("Then it's just a matter of running, deleting and just looping back \n");
 	for(int i = tasksLeft; i > 0; i--){
+		//get the smallest node
+		printf("Getting smallest\n");
 		struct node *smallest = getSB(head);
+		//get task from node
 		Task *tmp = smallest->task;
+		//run the task
+		printf("running here\n");
 		run(tmp, tmp->burst);
+		//delete it
+		printf("deleting current smallest node\n");
 		delete(&head, tmp);
 		
 	}
+	printf("After finishing this loop you're left with no more tasks left.\n");
 	tasksLeft = 0;
 } 
